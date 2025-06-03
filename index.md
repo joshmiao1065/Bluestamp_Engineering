@@ -1,6 +1,6 @@
 Pulse Sensor with LCD Dispaly
 
-This project reads heart rate from a pulse sensor and outputs it to a parallel LCD. An Elegeoo Uno R3 microcontroller and the Arduino IDE were utilized. The biggest challenge was deviating from the [guide]((https://how2electronics.com/pulse-rate-bpm-monitor-arduino-pulse-sensor/)) to implement a parallel LCD isntead of a serial one. 
+This project reads heart rate from a pulse sensor and outputs it to a parallel LCD. An Elegeoo Uno R3 microcontroller and the Arduino IDE were utilized. The biggest challenge was deviating from the <a href="https://drive.google.com/file/d/1GIGxyskToY8Ep137GnfTcfMCH4LaB6MF/view"> guide </a> to implement a parallel LCD isntead of a serial one. 
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
@@ -133,4 +133,4 @@ One of the best parts about Github is that you can view how other people set up 
 - [Example 2](https://sviatil0.github.io/Sviatoslav_BSE/)
 - [Example 3](https://arneshkumar.github.io/arneshbluestamp/)
 
-To watch the BSE tutorial on how to create a portfolio, click [here]((https://drive.google.com/file/d/1GIGxyskToY8Ep137GnfTcfMCH4LaB6MF/view)).
+To watch the BSE tutorial on how to create a portfolio, click <a href="https://drive.google.com/file/d/1GIGxyskToY8Ep137GnfTcfMCH4LaB6MF/view"> here </a>.
