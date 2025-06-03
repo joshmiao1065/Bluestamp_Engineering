@@ -1,4 +1,6 @@
-# Project Name Here
+Pulse Sensor with LCD Dispaly
+
+This project reads heart rate from a pulse sensor and outputs it to a parallel LCD. An Elegeoo Uno R3 microcontroller and the Arduino IDE were utilized. The biggest challenge was deviating from the [guide]([url](https://how2electronics.com/pulse-rate-bpm-monitor-arduino-pulse-sensor/)) to implement a parallel LCD isntead of a serial one. 
 Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
 
 You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
@@ -9,7 +11,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
-| FirstName LastInitialOnly | School Name | Electrical Engineering | Incoming Senior
+| Josh M | Cooper Union | Electrical Engineering | Incoming Junior |
 
 **Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-pages-site.html) if you need help.**
 
