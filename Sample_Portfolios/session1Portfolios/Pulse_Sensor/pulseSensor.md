@@ -6,7 +6,7 @@ This project reads heart rate from a pulse sensor and outputs it to a parallel L
 |:--:|:--:|:--:|:--:|
 | Josh M | Cooper Union | Electrical Engineering | Incoming Junior |
 
-![Headstone Image](Sample_PIcture.png)
+![Headstone Image](Sample_Picture.png)
   
 # Final Milestone
 
@@ -53,68 +53,84 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
-// Include necessary libraries: 
-#define USE_ARDUINO_INTERRUPTS true
+/*
+tells pulse sensor library hardware interrupts for better timing accuracy isntead of
+checking only when called in the main funciton. This is to ensure no sensor inputs are missed.
+You generally want to use this unless you have many sensors in which the interrupts may cause 
+other sensors inputs to be missed.
+*/
+#define USE_ARDUINO_INTERRUPTS 
 #include <PulseSensorPlayground.h>
 #include <LiquidCrystal.h>
 
-// Define LCD pins: RS, E, D4, D5, D6, D7
-LiquidCrystal lcd(12, 11, 4, 5, 6, 7); // Adjust if you wire differently
+// Define LCD pins: RS, E, D4, ..., D7
+LiquidCrystal lcd(12, 11, 4, 5, 6, 7);
 
-// Constants
-const int PULSE_SENSOR_PIN = 0;  // Analog PIN where the PulseSensor is connected
-const int LED_PIN = 13;          // On-board LED PIN
-const int THRESHOLD = 550;       // Threshold for detecting a heartbeat
+//Global Constants
+const int PULSE_SENSOR_PIN = 0; //data pin for pulse sensor
+const int LED_PIN = 13; //on-board LED pin so you know that code is running
+const int THRESHOLD = 550; //[nanometer] (green)light wavelength threshold for detecting a hearbeat
 
-// Create PulseSensorPlayground object
-PulseSensorPlayground pulseSensor;
+PulseSensorPlayground pulseSensor; //create the pulse sensor playground object to interact with the Pulse sensor hardware
 
-void setup()
-{
-  // Initialize Serial Monitor
-  Serial.begin(9600);
+void setup() {
+  Serial.begin(9600); //Initialize serial monitor with baud rate of 9600
+  /*
+  The serial monitor is like a terminal where the arduino and your comptuer can interact. you can use it to
+  print data, debug your code, or send commands
+  Baud rate is the maximum bits per seocnd that can be transferred 
+  9600 is the defaulted because it is almost gauranteed to be supported by all hardware and is fast enough for most tasks
+  */
 
-  // Initialize LCD
-  lcd.begin(16, 2);
-  lcd.clear();
+  //Initialize LCD
+  lcd.begin(16, 2); //Our LCD has 16 rows and 2 columns to display text
+  lcd.clear(); //Clear whatever might already be on the LCD screen
 
-  // Configure PulseSensor
-  pulseSensor.analogInput(PULSE_SENSOR_PIN);
-  pulseSensor.blinkOnPulse(LED_PIN);
+  //configure the pulse sensor with a few functions and passing in arguments
+  
+  //this declares that our variable PULSE_SENSOR_PIN will be the value of the input pin on the arduino which collects inputs from the sensor
+  pulseSensor.analogInput(PULSE_SENSOR_PIN); 
+  pulseSensor.blinkOnPulse(LED_PIN); //sends the information to blnik every time a heartbeat is detected to pin 13, the onboard LED
+  /*Whenever your heart beats, it sends out greater amount of hemoglobin then the surrounding blood. This hemoglobin reflects light
+  in a distinct and measurable way. The pulse sensor has a green LED and a light sensor. Since the hemoglobin is distributed in a way
+  which matches the frequency of heart beats, the light sensor can detect these periodic differneces in the amount of light received.
+  Since your heart beats periodically, this naturally creates a waveform with the same frequency as your heartbeat. We set THRESHOLD
+  as the minimum wavelength threshold since more hemoglobin reflects light that is more red which as a greater wavelength so 550nm 
+  is the wavelength that must be exceeded in order to count as a heartbeat since 550nm is about the wavelength of green*/
   pulseSensor.setThreshold(THRESHOLD);
 
-  // Check if PulseSensor is initialized
-  if (pulseSensor.begin())
-  {
-    Serial.println("PulseSensor object created successfully!");
-    lcd.setCursor(0, 0);
-    lcd.print("Sensor ready!");
-  }
+//if the pulse sensor has started correctly, intilize these things
+  if(pulseSensor.begin())
+    {
+      Serial.print("PulseSensor object created successfully!\n"); //prints this to serial monitor to let us know Sensor object works
+      lcd.setCursor(0, 0); //move the LCD cursor position to start printing from top left corner
+      lcd.print("Sensor ready!"); //print this message onto the lcd
+    }
+
 }
 
-void loop()
-{
-  lcd.setCursor(0, 0);
-  lcd.print("Heart Rate      "); // Padding to clear line
-
-  // Get the current Beats Per Minute (BPM)
+void loop() {
+  lcd.setCursor(0,0); //constantly ensure that the LCD prints starting from the top left of the screen
+  lcd.print("Heart Rate      "); //print with padding of just enough spaces so that all 16 blocks in first row are filled so BPM can print second row
+  
+  //get the current BPM
   int currentBPM = pulseSensor.getBeatsPerMinute();
 
-  // Check if a heartbeat is detected
-  if (pulseSensor.sawStartOfBeat())
-  {
-    Serial.println("♥ A HeartBeat Happened!");
-    Serial.print("BPM: ");
-    Serial.println(currentBPM);
+  //print outputs to serial monitor and lcd everytime a heartbeat is detected
+  if(pulseSensor.sawStartOfBeat())
+    {
+      Serial.print("♥ A heart beat hapened!\n");
+      Serial.print("BPM: ");
+      Serial.println(currentBPM);
 
-    lcd.setCursor(0, 1);
-    lcd.print("BPM: ");
-    lcd.print(currentBPM);
-    lcd.print("     "); // Clear residual characters
-  }
-
-  // Add a small delay to reduce CPU usage
-  delay(20);
+      lcd.setCursor(0, 1);
+      lcd.print("BPM: ");
+      lcd.print(currentBPM);
+      lcd.print("     "); // Clear residual characters
+      
+    }
+    
+  delay(20); //[ms]add a small delay to reduce CPU usage and conserve power
 }
 ```
 
