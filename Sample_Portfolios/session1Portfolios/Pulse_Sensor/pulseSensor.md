@@ -1,4 +1,4 @@
-Pulse Sensor with LCD Dispaly
+# Pulse Sensor with LCD Dispaly
 
 This project reads heart rate from a pulse sensor and outputs it to a parallel LCD. An Elegeoo Uno R3 microcontroller and the Arduino IDE were utilized. The biggest challenge was deviating from the <a href="https://drive.google.com/file/d/1GIGxyskToY8Ep137GnfTcfMCH4LaB6MF/view"> guide </a> to implement a parallel LCD isntead of a serial one. 
 
