@@ -52,10 +52,6 @@ Here's where you'll put your code. The syntax below places it into a block of co
 
 Here is the main code.py executable:
 ```python
-# SPDX-FileCopyrightText: 2019 Carter Nelson for Adafruit Industries
-#
-# SPDX-License-Identifier: MIT
-
 import time
 import math
 import board
