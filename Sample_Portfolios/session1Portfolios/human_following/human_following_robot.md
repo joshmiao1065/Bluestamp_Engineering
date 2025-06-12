@@ -63,96 +63,110 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
-#include <SoftwareSerial.h>
-SoftwareSerial BT_Serial(2, 3); // RX, TX
+const int A_1B = 5;  // Motor A backward pin (connected to L9110S IA1 or IB1)
+const int A_1A = 6;  // Motor A forward pin
+const int B_1B = 9;  // Motor B backward pin
+const int B_1A = 10; // Motor B forward pin
 
-/*
-L9110S:
-Motor A: IA1 = in1 (e.g. pin 9), IB1 = in2 (e.g. pin 8)
-Motor B: IA2 = in3 (e.g. pin 7), IB2 = in4 (e.g. pin 6)
-*/
+const int rightIR = 7; // Right IR sensor input pin
+const int leftIR = 8;  // Left IR sensor input pin
 
-#define in1 9 // Motor A input 1 (Right motor forward)
-#define in2 8 // Motor A input 2 (Right motor backward)
-#define in3 7 // Motor B input 1 (Left motor backward)
-#define in4 6 // Motor B input 2 (Left motor forward)
-
-char bt_data; // Variable to receive data from Bluetooth
-int Speed = 150; // PWM value (0–255)
+const int trigPin = 3; // Ultrasonic sensor trigger pin
+const int echoPin = 4; // Ultrasonic sensor echo pin
 
 void setup() {
-  Serial.begin(9600);
-  BT_Serial.begin(9600);
+  Serial.begin(9600); // Start the serial monitor at 9600 bits per second
 
-  pinMode(in1, OUTPUT);
-  pinMode(in2, OUTPUT);
-  pinMode(in3, OUTPUT);
-  pinMode(in4, OUTPUT);
+  // Set motor pins as output so we can send signals to control them
+  pinMode(A_1B, OUTPUT);
+  pinMode(A_1A, OUTPUT);
+  pinMode(B_1B, OUTPUT);
+  pinMode(B_1A, OUTPUT);
 
-  delay(200);
+  // Set IR sensor pins as input to receive signals from the environment
+  pinMode(leftIR, INPUT);
+  pinMode(rightIR, INPUT);
+  
+  // Set ultrasonic sensor pins
+  pinMode(echoPin, INPUT);  // Echo receives reflected signal
+  pinMode(trigPin, OUTPUT); // Trigger sends pulse
 }
 
 void loop() {
-  if (BT_Serial.available() > 0) {
-    bt_data = BT_Serial.read();
-    Serial.println(bt_data);
-  }
+  // Get the distance in centimeters using the ultrasonic sensor
+  float distance = readSensorData();
 
-  if (bt_data == 'f') {
-    forward();
-    Speed = 180;
-  }
-  else if (bt_data == 'b') {
-    backward();
-    Speed = 180;
-  }
-  else if (bt_data == 'l') {
-    turnLeft();
-    Speed = 250;
-  }
-  else if (bt_data == 'r') {
-    turnRight();
-    Speed = 250;
-  }
-  else if (bt_data == 's') {
-    Stop();
-    Speed = 0;
+  // Read IR sensor values
+  // LOW (0) means an object is detected; HIGH (1) means no object
+  int left = digitalRead(leftIR);
+  int right = digitalRead(rightIR);
+
+  int speed = 150; // Set motor speed (0 to 255)
+
+  // Decision logic for movement:
+  if (distance > 5 && distance < 10) {
+    moveForward(speed); // Move forward if there is space
+  } else if (!left && right) {
+    turnLeft(speed); // If left is blocked, turn left
+  } else if (left && !right) {
+    turnRight(speed); // If right is blocked, turn right
+  } else {
+    stopMove(); // If both blocked or too close, stop
   }
 }
 
-void forward() {
-  analogWrite(in1, Speed);
-  analogWrite(in2, 0);
-  analogWrite(in3, 0);
-  analogWrite(in4, Speed);
+// Function to read distance using ultrasonic sensor
+float readSensorData() {
+  digitalWrite(trigPin, LOW); // Clear the trigger pin
+  delayMicroseconds(2);       // Short delay
+  digitalWrite(trigPin, HIGH); // Send out a pulse
+  delayMicroseconds(10);       // Pulse duration
+  digitalWrite(trigPin, LOW);  // End the pulse
+
+  // Measure how long it takes the echo to come back
+  float distance = pulseIn(echoPin, HIGH) / 58.00;
+  // Convert the time into distance (cm); formula derived from speed of sound
+  return distance; // Return the calculated distance
 }
 
-void backward() {
-  analogWrite(in1, 0);
-  analogWrite(in2, Speed);
-  analogWrite(in3, Speed);
-  analogWrite(in4, 0);
+// Function to move forward
+void moveForward(int speed) {
+  analogWrite(A_1B, 0);       // Stop backward
+  analogWrite(A_1A, speed);   // Move forward
+  analogWrite(B_1B, speed);   // Move forward
+  analogWrite(B_1A, 0);       // Stop backward
 }
 
-void turnRight() {
-  analogWrite(in1, 0);
-  analogWrite(in2, Speed);
-  analogWrite(in3, 0);
-  analogWrite(in4, Speed);
+// Function to move backward (not used in loop but can be added)
+void moveBackward(int speed) {
+  analogWrite(A_1B, speed);   // Move backward
+  analogWrite(A_1A, 0);       // Stop forward
+  analogWrite(B_1B, 0);       // Stop forward
+  analogWrite(B_1A, speed);   // Move backward
 }
 
-void turnLeft() {
-  analogWrite(in1, Speed);
-  analogWrite(in2, 0);
-  analogWrite(in3, Speed);
-  analogWrite(in4, 0);
+// Function to turn right
+void turnRight(int speed) {
+  analogWrite(A_1B, speed);   // Right wheel moves backward
+  analogWrite(A_1A, 0);       // Stop forward
+  analogWrite(B_1B, speed);   // Left wheel moves backward
+  analogWrite(B_1A, 0);       // Stop forward
 }
 
-void Stop() {
-  analogWrite(in1, 0);
-  analogWrite(in2, 0);
-  analogWrite(in3, 0);
-  analogWrite(in4, 0);
+// Function to turn left
+void turnLeft(int speed) {
+  analogWrite(A_1B, 0);       // Stop backward
+  analogWrite(A_1A, speed);   // Right wheel moves forward
+  analogWrite(B_1B, 0);       // Stop backward
+  analogWrite(B_1A, speed);   // Left wheel moves forward
+}
+
+// Function to stop all motor movement
+void stopMove() {
+  analogWrite(A_1B, 0);       // Stop all motors
+  analogWrite(A_1A, 0);
+  analogWrite(B_1B, 0);
+  analogWrite(B_1A, 0);
 }
 
 ```
