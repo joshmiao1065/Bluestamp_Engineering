@@ -52,6 +52,7 @@ Here's where you'll put your code. The syntax below places it into a block of co
 
 Here is the main code.py executable:
 ```python
+# Standard Python and CircuitPython libraries
 import time
 import math
 import board
@@ -62,74 +63,82 @@ from adafruit_display_shapes.circle import Circle
 from adafruit_display_text.label import Label
 
 #--| USER CONFIG |--------------------------
-MARK_SIZE = 10           # marker radius
-MARK_COLOR = 0xFF3030    # marker color
-MARK_THICKNESS = 5       # marker thickness
-TRAIL_LENGTH = 200       # trail length
-TRAIL_COLOR = 0xFFFF00   # trail color
-DATE_COLOR = 0x111111    # date color
-TIME_COLOR = 0x111111    # time color
-LAT_MAX = 80             # latitude (deg) of map top/bottom edge
-UPDATE_RATE = 10         # update rate in seconds
+MARK_SIZE = 10           # Radius of the red marker that shows ISS location
+MARK_COLOR = 0xFF3030    # Color of the ISS marker (bright red)
+MARK_THICKNESS = 5       # Thickness of the circle marker
+TRAIL_LENGTH = 200       # Number of dots to keep as "trail" behind ISS
+TRAIL_COLOR = 0xFFFF00   # Color of the trail (yellow)
+DATE_COLOR = 0x111111    # Text color for the date (dark gray)
+TIME_COLOR = 0x111111    # Text color for the time (dark gray)
+LAT_MAX = 80             # Max latitude shown on the map (affects y-scaling)
+UPDATE_RATE = 10         # How often (in seconds) to update ISS position
 #-------------------------------------------
 
+# API providing current ISS location
 DATA_SOURCE = "http://api.open-notify.org/iss-now.json"
-DATA_LOCATION = ["iss_position"]
+DATA_LOCATION = ["iss_position"]  # JSON path to extract ISS location
 
+# Get screen size for calculations
 WIDTH = board.DISPLAY.width
 HEIGHT = board.DISPLAY.height
 
-# determine the current working directory needed so we know where to find files
+# Get current directory path (for loading local map image)
 cwd = ("/"+__file__).rsplit('/', 1)[0]
-pyportal = PyPortal(url=DATA_SOURCE,
-                    json_path=DATA_LOCATION,
-                    status_neopixel=board.NEOPIXEL,
-                    text_font=None,
-                    default_bg=cwd+"/map.bmp")
 
-# Connect to the internet and get local time
+# Initialize PyPortal with:
+# - API URL
+# - JSON path to data
+# - Neopixel status LED
+# - No font for data text
+# - Background image map
+pyportal = PyPortal(
+    url=DATA_SOURCE,
+    json_path=DATA_LOCATION,
+    status_neopixel=board.NEOPIXEL,
+    text_font=None,
+    default_bg=cwd + "/map.bmp"
+)
+
+# Sync internal clock to internet time
 pyportal.get_local_time()
 
-# Date and time label
+# Setup static text labels for date and time at bottom of screen
 date_label = Label(FONT, text="0000-00-00", color=DATE_COLOR, x=165, y=223)
 time_label = Label(FONT, text="00:00:00", color=TIME_COLOR, x=240, y=223)
 pyportal.splash.append(date_label)
 pyportal.splash.append(time_label)
 
-# ISS trail
-trail_bitmap = displayio.Bitmap(3, 3, 1)
+# Setup group for drawing the ISS trail (just yellow dots)
+trail_bitmap = displayio.Bitmap(3, 3, 1)  # Small 3x3 dot
 trail_palette = displayio.Palette(1)
 trail_palette[0] = TRAIL_COLOR
 trail = displayio.Group()
 pyportal.splash.append(trail)
 
-# ISS location marker
+# Setup marker group for drawing the current ISS location as a red circle
 marker = displayio.Group()
 for r in range(MARK_SIZE - MARK_THICKNESS, MARK_SIZE):
-    marker.append(Circle(0, 0, r, outline=MARK_COLOR))
+    marker.append(Circle(0, 0, r, outline=MARK_COLOR))  # draw concentric circles
 pyportal.splash.append(marker)
 
+#convert latitude and longitude to screen coordinates
 def get_location(width=WIDTH, height=HEIGHT):
     """Fetch current lat/lon, convert to (x, y) tuple scaled to width/height."""
 
-    # Get location
     try:
-        location = pyportal.fetch()
+        location = pyportal.fetch()  # Query the API
     except RuntimeError:
-        return None, None
+        return None, None  # On error, return invalid position
 
-    # Compute (x, y) coordinates
-    lat = float(location["latitude"])   # degrees, -90 to 90
-    lon = float(location["longitude"])  # degrees, -180 to 180
+    # Extract and convert strings to floats
+    lat = float(location["latitude"])   # -90 to 90
+    lon = float(location["longitude"])  # -180 to 180
 
-    # Scale latitude for cropped map
-    lat *= 90 / LAT_MAX
+    # Apply scaling to fit our cropped Mercator projection
+    lat *= 90 / LAT_MAX  # squash latitude into smaller range for the map
 
-    # Mercator projection math
-    # https://stackoverflow.com/a/14457180
-    # https://en.wikipedia.org/wiki/Mercator_projection#Alternative_expressions
-    x = lon + 180
-    x = width * x / 360
+    # Convert lon/lat to x/y using Mercator projection
+    x = (lon + 180) * (width / 360)
 
     y = math.radians(lat)
     y = math.tan(math.pi / 4 + y / 2)
@@ -139,24 +148,27 @@ def get_location(width=WIDTH, height=HEIGHT):
 
     return int(x), int(y)
 
+#draw location, trail, and update time
 def update_display(current_time, update_iss=False):
     """Update the display with current info."""
 
-    # ISS location
+    # Update ISS marker location and trail
     if update_iss:
         x, y = get_location()
         if x and y:
             marker.x = x
             marker.y = y
+            # Add to trail (limit trail size)
             if len(trail) >= TRAIL_LENGTH:
                 trail.pop(0)
-            trail.append(displayio.TileGrid(trail_bitmap,
-                                            pixel_shader=trail_palette,
-                                            x = x - 1,
-                                            y = y - 1) )
+            trail.append(displayio.TileGrid(
+                trail_bitmap,
+                pixel_shader=trail_palette,
+                x = x - 1,
+                y = y - 1
+            ))
 
-
-    # Date and time
+    # Update time and date labels
     date_label.text = "{:04}-{:02}-{:02}".format(current_time.tm_year,
                                                  current_time.tm_mon,
                                                  current_time.tm_mday)
@@ -164,17 +176,18 @@ def update_display(current_time, update_iss=False):
                                                  current_time.tm_min,
                                                  current_time.tm_sec)
 
+    # Attempt to refresh display
     try:
         board.DISPLAY.refresh(target_frames_per_second=60)
     except AttributeError:
         board.DISPLAY.refresh_soon()
 
-
-# Initial refresh
+#main loop to continuously update display
+# Initial update before entering loop
 update_display(time.localtime(), True)
 last_update = time.monotonic()
 
-# Run forever
+# Forever loop: update time and ISS position every UPDATE_RATE .5 seconds
 while True:
     now = time.monotonic()
     new_position = False
@@ -183,13 +196,15 @@ while True:
         last_update = now
     update_display(time.localtime(), new_position)
     time.sleep(0.5)
+
 ```
 Here is the settings.toml file necessary to connect to the internet:
 ```python
-CIRCUITPY_WIFI_SSID = "Verizon_9KJTQ7"
-CIRCUITPY_WIFI_PASSWORD = "left out for obvious reasons"
-ADAFRUIT_AIO_USERNAME = "left out for obvious reasons"
-ADAFRUIT_AIO_KEY = "left out for obvious reasons"
+CIRCUITPY_WIFI_SSID = "your wifi SSID"
+CIRCUITPY_WIFI_PASSWORD = "your wifi password"
+#create an adafruit IO account to get a username and key
+ADAFRUIT_AIO_USERNAME = "your adafruit IO account username"
+ADAFRUIT_AIO_KEY = "your adafruit IO key that's associated with your account"
 ```
 
 # Bill of Materials
