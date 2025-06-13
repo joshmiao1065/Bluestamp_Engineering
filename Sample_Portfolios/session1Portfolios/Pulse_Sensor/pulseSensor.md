@@ -12,6 +12,8 @@ This project reads heart rate from a pulse sensor and outputs it to a parallel L
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
+I only completed the base project but the final milestone should show off all the cool modifications you made to your project. I've listed some examples under the modifications.md file in this directory!
+
 <iframe width="485" height="862" src="https://www.youtube.com/embed/lpizojFzK8A" title="Bluestamp Heart Rate Monitor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For your final milestone, explain the outcome of your project. Key details to include are:
@@ -26,6 +28,8 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
+An example of a second milestone would be completing the base project and integrating the sensor into the arduino and circuit.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/y3VAmNlER5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
@@ -37,6 +41,8 @@ For your second milestone, explain what you've worked on since your previous mil
 # First Milestone
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
+
+An example of a first milestone would be demonstrating the function of the Arduino and connecting it to some components on an LED; showing off that oyu can write Arduino code and know how to build circuits on a breadbord is an example.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CaCazFBhYKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
