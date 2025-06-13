@@ -10,6 +10,8 @@ This project utilzies a pyportal which is an internet-capable microcontroller wi
   
 # Final Milestone
 
+I only complteded the base project and the modifications are left up to your discretion. All the modifications you made to the project are appropriate to share in the final milestone. checkout the modifications.md file in this directory for some suggestions!
+
 <iframe width="485" height="862" src="https://www.youtube.com/embed/HKJfoPRewhY" title="BlueStamp Engineering International Space Station Tracker" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For your final milestone, explain the outcome of your project. Key details to include are:
@@ -24,6 +26,8 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
+An example of a second milestone would be completing the base project, connecting it to the ISS position API and mapping that to coordinates on the pyportal screen.
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/y3VAmNlER5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
@@ -35,6 +39,8 @@ For your second milestone, explain what you've worked on since your previous mil
 # First Milestone
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
+
+An example of a first milestone would be leaning to use the pyportal and how to connect it to the internet. Perhaps write a program that simply displays any information using an API like the time or weather.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CaCazFBhYKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
