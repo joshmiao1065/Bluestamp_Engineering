@@ -10,7 +10,7 @@ This project utilzies a pyportal which is an internet-capable microcontroller wi
   
 # Final Milestone
 
-I only complteded the base project and the modifications are left up to your discretion. All the modifications you made to the project are appropriate to share in the final milestone. checkout the modifications.md file in this directory for some suggestions!
+I only complteded the base project and the modifications are left up to your discretion. All the modifications you made to the project are appropriate to share in the final milestone. checkout the modifications-ISS.md file in this directory for some suggestions!
 
 <iframe width="485" height="862" src="https://www.youtube.com/embed/HKJfoPRewhY" title="BlueStamp Engineering International Space Station Tracker" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
