@@ -12,7 +12,7 @@ This project reads heart rate from a pulse sensor and outputs it to a parallel L
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
-I only completed the base project but the final milestone should show off all the cool modifications you made to your project. I've listed some examples under the modifications.md file in this directory!
+I only completed the base project but the final milestone should show off all the cool modifications you made to your project. I've listed some examples under the modifications-biometric.md file in this directory!
 
 <iframe width="485" height="862" src="https://www.youtube.com/embed/lpizojFzK8A" title="Bluestamp Heart Rate Monitor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
