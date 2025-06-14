@@ -20,7 +20,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
-I only completed the base project but the final milestone should include all of the awesome modifications you made! I've attached some mod ideas in the modification.md file in this directory!
+I only completed the base project but the final milestone should include all of the awesome modifications you made! I've attached some mod ideas in the modification-gesture.md file in this directory!
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/F7M7imOVGug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
