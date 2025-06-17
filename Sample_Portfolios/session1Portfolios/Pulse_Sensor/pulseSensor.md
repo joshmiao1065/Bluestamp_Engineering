@@ -109,7 +109,7 @@ void setup() {
 //if the pulse sensor has started correctly, intilize these things
   if(pulseSensor.begin())
     {
-      Serial.print("PulseSensor object created successfully!\n"); //prints this to serial monitor to let us know Sensor object works
+      Serial.println("PulseSensor object created successfully!"); //prints this to serial monitor to let us know Sensor object works
       lcd.setCursor(0, 0); //move the LCD cursor position to start printing from top left corner
       lcd.print("Sensor ready!"); //print this message onto the lcd
     }
