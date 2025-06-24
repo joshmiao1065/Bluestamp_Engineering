@@ -21,7 +21,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 I only completed the base project but the final milestone should show off all of the cool modifications you did to your arm. Some modification suggestions can be found in the modifications.md file in this directory.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F7M7imOVGug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="1319" height="742" src="https://www.youtube.com/embed/QUYMb4puTQo" title="Coby L  Milestone 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For your final milestone, explain the outcome of your project. Key details to include are:
 - What you've accomplished since your previous milestone
