@@ -9,14 +9,15 @@ df.columns = ['CountryID', 'Country', 'LatestYear', 'ProtectedAreasPct']
 
 # Create the interactive map
 fig = px.choropleth(df, 
-                    locations="Country",  # Column with country names
-                    locationmode='country names',  # Set to use country names
-                    color="ProtectedAreasPct",  # Values to color by
-                    hover_name="Country",  # What shows up on hover
-                    hover_data=['LatestYear', 'ProtectedAreasPct'],
-                    color_continuous_scale=px.colors.sequential.YlGn,  # Green color scale
-                    title='Terrestrial and Marine Protected Areas (% of total territorial area)',
-                    labels={'ProtectedAreasPct':'Protected Areas %'})
+    locations="Country",  # Column with country names
+    locationmode='country names',  # Set to use country names
+    color="ProtectedAreasPct",  # Values to color by
+    hover_name="Country",  # What shows up on hover
+    hover_data=['LatestYear', 'ProtectedAreasPct'],
+    color_continuous_scale=px.colors.sequential.YlGn,  # Green color scale
+    title='Terrestrial and Marine Protected Areas (% of total territorial area)',
+    labels={'ProtectedAreasPct':'Protected Areas %'},
+    range_color=(0, 60))
 
 # Customize the layout
 fig.update_layout(
