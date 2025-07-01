@@ -70,7 +70,7 @@ Here's a sample schematic that uses an L298 motor driver instead of an L9110S:
 # Code
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
-Here is the code for the hand module to control the robot:
+## Here is the code for the hand module to control the robot:
 ```c++
 #include <SoftwareSerial.h> // Include the SoftwareSerial library to use other digital pins for serial communication
 SoftwareSerial BT_Serial(2, 3); // Create a Bluetooth serial connection on pins 2 (RX) and 3 (TX)
@@ -138,7 +138,7 @@ void Read_accelerometer() {
   Serial.println(AcZ); 
 }
 ```
-Here is the code for the robot component;
+## Here is the code for the robot component;
 ``` c++
 #include <SoftwareSerial.h> // Include the SoftwareSerial library to allow serial communication on digital pins
 SoftwareSerial BT_Serial(2, 3); // Create a software serial port on pins 2 (RX) and 3 (TX) for Bluetooth communication
