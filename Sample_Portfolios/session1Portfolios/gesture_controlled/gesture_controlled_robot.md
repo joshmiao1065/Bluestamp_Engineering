@@ -65,6 +65,7 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 
 Here's a sample schematic that uses an L298 motor driver instead of an L9110S:
 ![Headstone Image](gesture-controlled-robot-schematic.png)
+![Headstone Image](gesture-controlled-robot-schematic.png)
 
 
 # Code
