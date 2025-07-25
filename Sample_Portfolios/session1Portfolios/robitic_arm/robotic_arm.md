@@ -64,6 +64,7 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 
 Here is a sample schematic that uses lithium batteries instead of a 9V alkaline.
 ![Headstone Image](arm-schematic.png)
+![Headstone Image](armschematic.png)
 
 # Code
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
