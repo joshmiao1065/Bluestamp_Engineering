@@ -218,7 +218,7 @@ Don't forget to place the link of where to buy each component inside the quotati
 
 | **Part** | **Note** | **Price** | **Link** |
 |:--:|:--:|:--:|:--:|
-| Adafruit Pyportal | Microcontroller and screen | $54.95 | <a href="https://www.adafruit.com/product/4116"> Link </a> |
+| Adafruit Pyportal | Microcontroller and screen | $54.95 | <a href="https://www.adafruit.com/product/4116"> Malachi </a> |
 | Micro USB Cable | Connect computer to pyportal | $4.95 | <a href="https://www.adafruit.com/product/592"> Link </a> |
 
 # Other Resources/Examples
